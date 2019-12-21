@@ -22,16 +22,6 @@ class Marble:
         self.marble_radius = radius
         self.is_clicked = False
 
-    # def marble_params(self                 x:int,
-    #              y:int,
-    #              radius:int,
-    #              colour:str):
-    #     self.x = x
-    #     self.y = y
-    #     self.colour =__COLOURS__[colour]
-    #     self.on_ring = False
-    #     self.marble_radius = radius
-
     def _clicked(self):
         d = dist(mouseX, mouseY, self.x, self.y)
 

@@ -5,8 +5,11 @@ from .hexgrid import HexGrid
 from .settings import *
 
 
-class Zertz:
-    def __init__(self):
+class Zertz(HexGrid):
+    def __init__(self,
+                 side_length: int,
+                 cell_type: callable):
+        super().__init__(side_length, cell_type)
         self.MARBLE_RADIUS = CANVAS_HEIGHT * 45 / 900
         self.RING_RADIUS = CANVAS_HEIGHT * 65 / 900
         self.marbles = []
@@ -35,19 +38,16 @@ class Zertz:
                 posy += self.MARBLE_RADIUS + 10
 
         # Setup the Rings
-        self.cells_per_col = [4, 5, 6, 7, 6, 5, 4]
+        # self.cells_per_col = [4, 5, 6, 7, 6, 5, 4]
         posx = CANVAS_WIDTH * 230 / 1000
-        for i in range(len(ALPH)):
-            posx += self.RING_RADIUS - 1
+        posx += self.RING_RADIUS - 1
+        for i in range(self.num_cells):
             posy = (CANVAS_HEIGHT * 340 / 900) - (self.cells_per_col[i] % 4) * self.RING_RADIUS / 2
-            for j in range(self.cells_per_col[i]):
-                ring = Ring(x = posx,
-                            y = posy,
-                            radius = self.RING_RADIUS)
-                posy += self.RING_RADIUS + 1
-                self.rings.append(ring)
-
-
+            ring = self.grid[i]._ring_params(x = posx,
+                                             y = posy,
+                                             radius = self.RING_RADIUS)
+            posy += self.RING_RADIUS + 1
+            self.rings.append(ring)
 
     def render(self):
         for ring in self.rings:
@@ -58,7 +58,7 @@ class Zertz:
 
 
 
-z = Zertz()
+z = Zertz(4, Marble)
 
 def setup():
     createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -107,6 +107,6 @@ def mouseReleased():
     # Check if any of the rings were clicked
     for i, ring in enumerate(z.rings):
         if ring.is_clicked and ring.is_removable:
-            console.log(i)
+            # console.log(i)
             z.rings.pop(i)
 

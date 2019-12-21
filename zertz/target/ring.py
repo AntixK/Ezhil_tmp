@@ -2,17 +2,19 @@ from pyp5js import *
 from .settings import *
 
 class Ring:
-    def __init__(self,
-                 x:int,
-                 y:int,
-                 radius:int,
-                 colour:int = 245):
-        self.x = x
-        self.y = y
-        self.colour = colour
+    def __init__(self):
         self.has_marble = False
         self.is_removable = True
         self.is_clicked = False
+
+    def _ring_params(self,
+                     x:int,
+                     y:int,
+                     radius:int,
+                     colour:int = 245):
+        self.x = x
+        self.y = y
+        self.colour = colour
         self.ring_radius = radius
 
     def _clicked(self):

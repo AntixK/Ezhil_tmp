@@ -1,12 +1,11 @@
-# from typing import Callable
+from itertools import accumulate
+
 
 class HexGrid:
 
-    __coord_map = {'N':1}
-
     def __init__(self,
                  side_length: int = 4,
-                 cell_type = 1):
+                 cell_type: callable = None):
         self.side_length = side_length
         self.cell_type = cell_type
         self.num_cells = self._get_num_cells()
@@ -18,15 +17,8 @@ class HexGrid:
         self._populate_grid()
 
     def _populate_grid(self):
-        for col_id in range(2*self.side_length-1):
-            col =[]
-            for row_id in range(2*self.side_length-1):
-                if row_id < self.cells_per_col[col_id]:
-                    col.append(self.cell_type)
-                else:
-                    col.append(None)
-            self.grid.append(col)
-
+        for col_id in range(self.num_cells):
+            self.grid.append(self.cell_type())
 
     def _get_num_cells(self):
         """
@@ -36,7 +28,40 @@ class HexGrid:
         """
         cells_per_col = list(range(self.side_length, 2*self.side_length))
         self.cells_per_col =  cells_per_col + cells_per_col[::-1][1:]
+        self.cum_cells = list(accumulate(self.cells_per_col))
         return sum(self.cells_per_col)
+
+    def _get_col_row_from_ind(self, index:int):
+        for col, num_cells in enumerate(self.cum_cells):
+            if index < num_cells:
+                break
+        return col, index - self.cum_cells[col - 1]
+
+    def _get_ind_from_col_row(self, col:int, row:int):
+        if col > 0:
+            return self.cum_cells[col - 1] + row
+        else:
+            return row
+
+    def _get_neighbours(self, i:int):
+        neighbours = []
+
+        neighbours.append(self.grid[i-1])
+        neighbours.append(self.grid[i+1])
+        curr_col, curr_row = self._get_col_row_from_ind(i)
+        prev_col = curr_col - 1
+        next_col = curr_col + 1
+
+        neighbours.append(self.grid[self._get_ind_from_col_row(prev_col, curr_row)])
+        neighbours.append(self.grid[self._get_ind_from_col_row(next_col, curr_row)])
+
+        if curr_col <= len(self.cells_per_col) / 2:
+            neighbours.append(self.grid[self._get_ind_from_col_row(prev_col, curr_row - 1)])
+            neighbours.append(self.grid[self._get_ind_from_col_row(next_col, curr_row + 1)])
+        else:
+            neighbours.append(self.grid[self._get_ind_from_col_row(prev_col, curr_row + 1)])
+            neighbours.append(self.grid[self._get_ind_from_col_row(next_col, curr_row - 1)])
+        return neighbours
 
     def __call__(self,
                  dir:str,
@@ -50,12 +75,14 @@ class HexGrid:
     def __repr__(self):
         return f"{self.grid}"
 
-
-
-
-
-
-
-
-
+#
+# def fun(i):
+#     return i
+#
+# if __name__ == '__main__':
+#     h = HexGrid(cell_type=fun)
+#     print(h)
+#     # print(h._get_col_row_from_ind(16))
+#     print(h._get_neighbours(31))
+#
 
