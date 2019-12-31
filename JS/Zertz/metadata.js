@@ -1,0 +1,14 @@
+const BGN_COLOUR = 51;
+const CANVAS_HEIGHT = 810;
+const CANVAS_WIDTH = 1000;
+
+const RING_RADIUS = CANVAS_HEIGHT * 65 / 900;
+const MARBLE_RADIUS = CANVAS_HEIGHT * 45 / 900;
+
+const NUM_MARBLES = [12, 10, 8];
+
+const MARBLE_COLOURS = {
+    C: [18, 151, 147],
+    P: [255, 65, 134],
+    Y: [255, 204, 102]
+};
