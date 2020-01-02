@@ -1,4 +1,0 @@
-CANVAS_HEIGHT = 810
-CANVAS_WIDTH = 1000
-BGN_COLOUR = 51
-ALPH = ["A", "B", "C", "D", "E", "F", "G"]
