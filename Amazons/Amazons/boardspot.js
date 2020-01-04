@@ -16,7 +16,7 @@ class BoardSpot extends Board {
     _render(){
         noStroke();
         fill(this.colour);
-        square(this.posx,this.posy, this.size);
+        rect(this.posx,this.posy, this.size, this.size);
         // fill(BGN_COLOUR);
         // circle(this.posx, this.posy, 20);
 

@@ -24,7 +24,7 @@ function mouseMoved() {
 
 function mouseReleased() {
 
-    // Check if the gradded disk is on any ring
+    // Check if the dragged disk is on any ring
     for (let disk of game.disks) {
 
         if (disk._clicked()) {
@@ -51,6 +51,7 @@ function mouseReleased() {
                     disk.is_clicked = false;
                 }
             }
+            return;
             
         }
 
