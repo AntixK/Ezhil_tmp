@@ -1,5 +1,5 @@
 class Disk extends Token {
-    constructor(posx, posy, colour){
+    constructor(posx, posy, colour, ids){
         super();
         this.posx = posx;
         this.posy = posy;
@@ -8,6 +8,9 @@ class Disk extends Token {
         this.init_posx = posx;
         this.init_posy = posy;
         this.colour = colour;
+
+        // board id for checking for valid moves
+        this.id = ids;
 
         this.shade = [];
         for (let c of this.colour){
@@ -25,12 +28,14 @@ class Disk extends Token {
 
     }
 
-    _set_pos(posx, posy) {
+    _set_pos(posx, posy, id) {
         this.posx = posx;
         this.posy = posy;
 
         this.init_posx = posx;
         this.init_posy = posy;
+
+        this.id = id;
     }
 
     _reset_init_pos() {
@@ -62,8 +67,6 @@ class Disk extends Token {
         if (this.is_clicked) {
             this.posx = mouseX - this.xoffset;
             this.posy = mouseY - this.yoffset;
-
-            
 
         }
 

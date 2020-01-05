@@ -3,7 +3,9 @@ class Amazons extends AbstractStrategyGame {
         super([new Player1(), new Player1()]);
         this.board = [];
         this.board_size = board_size;
-        this.awaiting_move = false;
+
+        this.piece_moved = false;
+        this.arrow_placed = false;
         
     }
 
@@ -44,20 +46,110 @@ class Amazons extends AbstractStrategyGame {
             // console.log( ~~ (k / this.board_size), k % this.board_size);
             let x = this.board[~~ (k / this.board_size)][k % this.board_size].posx;
             let y = this.board[~~ (k / this.board_size)][k % this.board_size].posy;
+            let id = {x:~~ (k / this.board_size),
+                      y:k % this.board_size
+                      };
+            this.players[0].pieces.push(new Disk(x, 
+                                                 y, 
+                                                 PLAYER_COLOURS[0], 
+                                                 id));
+            this.board[~~ (k / this.board_size)][k % this.board_size].has_disk = true;
 
-            this.players[0].pieces.push(new Disk(x, y, PLAYER_COLOURS[0]));
         }
 
         // Player 1
         for (let i=0; i < 4; ++i){
             let k = 9 + (i * 30) - 3 * delta(i % 3);
-            console.log(k, ~~ (k / this.board_size), k % this.board_size);
             let x = this.board[~~ (k / this.board_size)][k % this.board_size].posx;
             let y = this.board[~~ (k / this.board_size)][k % this.board_size].posy;
+            let id = {x:~~ (k / this.board_size),
+                      y:k % this.board_size
+                     };
+            this.players[1].pieces.push(new Disk(x, 
+                                                 y, 
+                                                 PLAYER_COLOURS[1], 
+                                                 id));
+            this.board[~~ (k / this.board_size)][k % this.board_size].has_disk = true;
+                                        
 
-            this.players[1].pieces.push(new Disk(x, y, PLAYER_COLOURS[1]));
         }
         
+    }
+
+    _get_possible_moves(id){
+        let moves = []
+
+        // moves that go left
+        for (let i =id.x - 1; i >= 0; --i){
+
+            if (this.board[i][id.y] === null || 
+                this.board[i][id.y] === undefined ||
+                this.board[i][id.y].has_disk){
+                break;
+            } else{
+             moves.push({x: i, y:id.y})
+            }
+        }
+
+        // moves that go right
+        for (let i =id.x + 1; i < this.board_size; ++i){
+
+            if (this.board[i][id.y] === null || 
+                this.board[i][id.y] === undefined ||
+                this.board[i][id.y].has_disk){
+                break;
+            } else{
+             moves.push({x: i, y:id.y})
+            }
+        }        
+
+        // moves that go up
+        for (let i =id.y - 1; i >= 0; --i){
+
+            if (this.board[id.x][i] === null ||
+                 this.board[id.x][i] === undefined ||
+                 this.board[id.x][i].has_disk){
+                break;
+            } else{
+             moves.push({x: id.x, y:i})
+            }
+        }
+
+        // moves that go down
+        for (let i =id.y + 1; i < this.board_size; ++i){
+
+            if (this.board[id.x][i] === null || 
+                this.board[id.x][i] === undefined ||
+                this.board[id.x][i].has_disk){
+                break;
+            } else{
+
+             moves.push({x: id.x, y:i})
+            }
+        }
+
+        // moves that go diagonally
+
+        return moves;
+
+    }
+
+    _is_move_complete(){
+        return this.piece_moved && this.arrow_placed;
+    }
+
+    _is_over(){
+        let isover = true;
+        for (let piece of this.players[0].pieces){
+            let moves = this._get_possible_moves(piece.id);
+            if (moves == []){
+                isover = isover && true;
+            } else {
+                isover = false;
+            }
+        }
+
+        return isover;
     }
 
     _render(){

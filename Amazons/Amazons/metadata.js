@@ -13,7 +13,7 @@ const BOARDSPOT_COLOURS = {0: 191,
 const PLAYER_COLOURS = {0: [255,  65, 134],
                         1: [255, 204, 102]
 
-}
+};
 // const DISK_COLOURS = {
 //     W: [240, 236, 225],
 //     R: [255,  65, 134],

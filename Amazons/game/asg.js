@@ -5,12 +5,6 @@ class AbstractStrategyGame{
         this.curr_player_id = 0;
         this.curr_player = this.players[this.curr_player_id];
 
-        this.piece_moved = false;
-        this.arrow_placed = false;
-    }
-
-    _is_move_complete(){
-        return this.piece_moved && this.arrow_placed;
     }
 
     get curr_opponent_id(){
@@ -48,11 +42,15 @@ class AbstractStrategyGame{
     }
 
     // Abstract 
-    _get_move(){
-        return this.curr_player.ask_move();
-    }
+    // _get_move(){
+    //     return this.curr_player.ask_move();
+    // }
 
-    _make_move(move){
+    // _make_move(move){
+    //     console.error("Not Implemented");
+    // }
+
+    _is_move_complete(){
         console.error("Not Implemented");
     }
 
