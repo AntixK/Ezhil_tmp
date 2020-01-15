@@ -35,11 +35,11 @@ class AbstractStrategyGame{
         game._render();
 
         if (this._is_over()){
-            console.log(this.curr_player_id, " is the winner")
+            console.log(this._is_over(), " is the winner")
             return;
+        } else {
+            this._switch_player();
         }
-
-        this._switch_player();
 
     }
 

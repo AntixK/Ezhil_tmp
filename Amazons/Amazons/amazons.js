@@ -204,26 +204,37 @@ class Amazons extends AbstractStrategyGame {
     // }
 
     _is_over(){
+
+        // Check for player 1
         let isover = true;
         for (let piece of this.players[0].pieces){
             let moves = this._get_possible_moves(piece.id);
-            if (moves == []){
+            if (moves.length == 0){
                 isover = isover && true;
             } else {
                 isover = false;
             }
         }
+
+        if (isover){
+            return 2;
+        }
+        // Check for player 2
+        isover = true;
 
         for (let piece of this.players[1].pieces){
             let moves = this._get_possible_moves(piece.id);
-            if (moves == []){
+            if (moves.length == 0){
                 isover = isover && true;
             } else {
                 isover = false;
             }
         }
+        if (isover){
+            return 1;
+        }
 
-        return isover;
+        return isover
     }
 
     _render(){
