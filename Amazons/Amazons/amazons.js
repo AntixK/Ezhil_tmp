@@ -128,7 +128,53 @@ class Amazons extends AbstractStrategyGame {
             }
         }
 
-        // moves that go diagonally
+        // moves that go down-right
+        for (let i =id.x + 1, j =id.y + 1; i < this.board_size && j < this.board_size; ++i, ++j){
+            if (this.board[i][j] === null || 
+                this.board[i][j] === undefined ||
+                this.board[i][j].has_disk){
+                break;
+            } else{
+
+            moves.push({x: i, y:j})
+            }
+        }
+
+        // moves that go top-right
+        for (let i =id.x + 1, j =id.y - 1; i < this.board_size && j >= 0; ++i, --j){
+            if (this.board[i][j] === null || 
+                this.board[i][j] === undefined ||
+                this.board[i][j].has_disk){
+                break;
+            } else{
+
+            moves.push({x: i, y:j})
+            }
+        }
+    
+        // moves that go top-left
+        for (let i =id.x - 1, j =id.y - 1; i >= 0 && j >= 0; --i, --j){
+            if (this.board[i][j] === null || 
+                this.board[i][j] === undefined ||
+                this.board[i][j].has_disk){
+                break;
+            } else{
+
+            moves.push({x: i, y:j})
+            }
+        }
+
+        // moves that go down-left
+        for (let i =id.x - 1, j =id.y + 1; i >=0 && j < this.board_size; --i, ++j){
+            if (this.board[i][j] === null || 
+                this.board[i][j] === undefined ||
+                this.board[i][j].has_disk){
+                break;
+            } else{
+
+            moves.push({x: i, y:j})
+            }
+        }
 
         return moves;
 
@@ -138,9 +184,37 @@ class Amazons extends AbstractStrategyGame {
         return this.piece_moved && this.arrow_placed;
     }
 
+    _reset_move_flags(){
+        this.piece_moved = false;
+        this.arrow_placed = false;
+    }
+
+    // _check_winner(){
+    //     for (let player of this.players){
+    //         for (let piece of player.pieces){
+    //             let moves = this._get_possible_moves(piece.id);
+    //             if (moves == []){
+    //                 isover = isover && true;
+    //             } else {
+    //                 isover = false;
+    //             }
+    //         }
+    //     }
+
+    // }
+
     _is_over(){
         let isover = true;
         for (let piece of this.players[0].pieces){
+            let moves = this._get_possible_moves(piece.id);
+            if (moves == []){
+                isover = isover && true;
+            } else {
+                isover = false;
+            }
+        }
+
+        for (let piece of this.players[1].pieces){
             let moves = this._get_possible_moves(piece.id);
             if (moves == []){
                 isover = isover && true;
@@ -163,9 +237,6 @@ class Amazons extends AbstractStrategyGame {
         }
         this.players[0]._render();
         this.players[1]._render();
-
-        // this.players[0]._ask_move();
-
 
     }
 }

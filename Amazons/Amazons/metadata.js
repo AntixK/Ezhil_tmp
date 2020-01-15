@@ -6,7 +6,7 @@ const BOARDSPOT_SIZE = CANVAS_HEIGHT * 75 / 900;
 const DISK_RADIUS = CANVAS_HEIGHT * 60 / 900;
 
 const NUM_DISKS = [12, 10, 8];
-const BOARDSPOT_COLOURS = {0: 191,
+const BOARDSPOT_COLOURS = {0: [191, 191, 191],
                            1: [18, 151, 147], 
                            };
 

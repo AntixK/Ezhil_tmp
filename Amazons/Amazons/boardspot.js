@@ -3,6 +3,7 @@ class BoardSpot extends Board {
         super();
         this.posx = posx;
         this.posy = posy;
+        this.init_colour = BOARDSPOT_COLOURS[colour]
         this.colour = BOARDSPOT_COLOURS[colour];
         this.size = BOARDSPOT_SIZE;
 
@@ -10,8 +11,20 @@ class BoardSpot extends Board {
     }
 
     _set_colour(colour){
-        this.colour = BOARDSPOT_COLOURS[colour];
+        this.colour = colour;
     }
+
+    _highlight(){
+        this.colour = [];
+        for (let c of this.init_colour){
+            this.colour.push(c + 45);
+        }
+    }
+
+    _reset_colour(){
+        this.colour = this.init_colour;
+    }
+
 
     _render(){
         noStroke();

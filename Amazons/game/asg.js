@@ -17,8 +17,8 @@ class AbstractStrategyGame{
 
     _switch_player(){
         if (this._is_move_complete()){
-            this.piece_moved = false;
-            this.arrow_placed = false;
+            this._reset_move_flags()
+
             this.curr_player = this.curr_opponent;
             this.curr_player_id = this.curr_opponent_id;
         }
@@ -34,9 +34,11 @@ class AbstractStrategyGame{
 
         game._render();
 
-        // if (this._is_over()){
-        //     break;
-        // }
+        if (this._is_over()){
+            console.log(this.curr_player_id, " is the winner")
+            return;
+        }
+
         this._switch_player();
 
     }
@@ -49,6 +51,9 @@ class AbstractStrategyGame{
     // _make_move(move){
     //     console.error("Not Implemented");
     // }
+    _reset_move_flags(){
+        console.error("Not Implemented");
+    }
 
     _is_move_complete(){
         console.error("Not Implemented");

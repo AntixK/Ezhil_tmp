@@ -1,7 +1,21 @@
 function mouseMoved() {
     for (let piece of game.curr_player.pieces) {
         if(piece._hovered()){
+            let valid_moves = game._get_possible_moves(piece.id)
+            for (let move of valid_moves){
+                game.board[move.x][move.y]._highlight();
+            }
+
             return;
+        }else{
+            for(let k =0; k < game.board_size; ++k){
+                for (j = 0; j < game.board_size; ++j){
+                    if (game.board[k][j] != null){
+                        game.board[k][j]._reset_colour();
+                    }
+                }
+            }
+
         }
     }
 }
