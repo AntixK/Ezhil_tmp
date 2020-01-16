@@ -60,6 +60,8 @@ function mouseReleased() {
                         
                         game.board[move.x][move.y].has_disk = true;
                         game.piece_moved = true;
+                        game.moved_piece = piece;
+
                         
 
                     } else{
@@ -78,19 +80,19 @@ function mouseReleased() {
 
     // Remove board tiles only when a piece is moved previously
     if (game.piece_moved){
-        for(let k =0; k < game.board_size; ++k){
-            for (j = 0; j < game.board_size; ++j){
-                if (game.board[k][j] != null){
-                    d = dist(mouseX, 
-                            mouseY, 
-                            game.board[k][j].posx, 
-                            game.board[k][j].posy);
+        let valid_moves = game._get_possible_moves(game.moved_piece.id);
 
-                    if (d < BOARDSPOT_SIZE / 2){
-                        game.board[k][j] = null;
-                        game.arrow_placed = true;
-                        return;
-                    }
+        for(let move of valid_moves){
+            if (game.board[move.x][move.y] != null){
+                d = dist(mouseX, 
+                        mouseY, 
+                        game.board[move.x][move.y].posx, 
+                        game.board[move.x][move.y].posy);
+
+                if (d < BOARDSPOT_SIZE / 2){
+                    game.board[move.x][move.y] = null;
+                    game.arrow_placed = true;
+                    return;
                 }
             }
         }

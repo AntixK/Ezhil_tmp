@@ -6,6 +6,8 @@ class Amazons extends AbstractStrategyGame {
 
         this.piece_moved = false;
         this.arrow_placed = false;
+
+        this.moved_piece = null;
         
     }
 
@@ -187,6 +189,7 @@ class Amazons extends AbstractStrategyGame {
     _reset_move_flags(){
         this.piece_moved = false;
         this.arrow_placed = false;
+        this.moved_piece = null;
     }
 
     // _check_winner(){
